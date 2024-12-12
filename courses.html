@@ -512,7 +512,7 @@
                     paint: {
                         'line-color': '#f03b20', // Default boundary color (turquoise)
                         'line-width': 1.5,
-                        'line-opacity': 0.7,
+                        'line-opacity': 1,
                     }
                 });
 
@@ -743,11 +743,10 @@
         })
         .catch(err => console.error('Gagal memuat GeoJSON Bidang Tanah:', err));
 
-    
-        // Memuat file GeoJSON bangunan
-        fetch('./img/bangunanbenar.geojson')
-        .then(response => response.json())
-        .then(geojson => {
+    // Memuat file GeoJSON bangunan
+    fetch('./img/Bangunanbenar.geojson')
+    .then(response => response.json())
+    .then(geojson => {
         // Menambahkan sumber GeoJSON bangunan ke peta
         map.addSource('geojson-data-bangunan', {
             type: 'geojson',
@@ -777,7 +776,7 @@
                 'fill-extrusion-opacity': 1
             }
         });
-
+        map.moveLayer('geojson-layer-RDTR', 'geojson-layer-bidang', 'building-extrusion', 'rain');
         
 
 
@@ -857,9 +856,11 @@
 
     })
     .catch(err => console.error('Gagal memuat GeoJSON Bangunan:', err));
-    map.moveLayer('geojson-layer-bidang','geojson-layer-RDTR','building-extrusion','rain', );
+
+
+
         map.on('style.load', () => {
-        Papa.parse('img/cctvbaru.csv', {
+        Papa.parse('./img/cctvbaru.csv', {
             download: true,
             header: true,
             complete: function (results) {
